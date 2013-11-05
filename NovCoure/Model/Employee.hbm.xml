@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+				   assembly="NovCoure"
+				   namespace="NovCoure.Model">
+
+	<class name="Employee" table="Employees">
+		<!--<cache usage="read-write"/>-->
+		<id name="Id">
+			<generator class="identity"/>
+		</id>
+		<property name="Name"/>
+
+
+		<set name="Jobs" table="JobsToEmps">
+			<key column="EmpId"/>
+			<many-to-many class="MaintenanceJob" column="JobId"/>
+		</set>
+
+		<list name="EmergencyPhoneNumbers" table="EmergencyPhoneNumbers">
+			<key column="EmpId"/>
+			<index column="Position"/>
+			<element column="Phone"/>
+		</list>
+		<map name="Attributes" table="Attributes">
+			<key column="EmpId"/>
+			<index column="MapKey" type="String"/>
+			<element column="MapVal" type="String"/>
+		</map>
+
+		<any name="AssoicatedWith" id-type="Int32" meta-type="string">
+			<meta-value value="Dog" class="Dog"/>
+			<meta-value value="Building" class="Building"/>
+			
+			<column name="AssoicatedWithType"/>
+			<column name="AssoicatedWithId"/>
+
+		</any>
+
+	</class>
+</hibernate-mapping>
